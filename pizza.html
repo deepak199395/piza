@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Order</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  #container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  img {
+    width: 200px;
+    height: auto;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #quantity {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <h2>Delicious Pizza</h2>
+  <img src="https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_FT23_376_EC_120123_3.jpg" alt="Pizza">
+  <div id="quantity">Quantity: <span id="quantityValue">0</span></div>
+  <button onclick="addPizza()">Add</button>
+  <button onclick="removePizza()">Subtract</button>
+  <br>
+  <input type="checkbox" id="addonsCheckbox" onchange="applyAddons()"> Addons ($5)
+  <br>
+  <label for="discount">Discount %:</label>
+  <input type="number" id="discount" min="0" max="60" onchange="applyDiscount()">
+  <br>
+  <h3>Total Price: $<span id="totalPrice">0</span></h3>
+</div>
+<script>
+  let qty = 0;
+  let addonsApplied = false;
+  let discount = 0;
+
+  function updateTotalPrice() {
+    let totalPrice = 50 * quantity;
+    if (addonsApplied && qty > 0) {
+      totalPrice += 5;
+    }
+    totalPrice -= (totalPrice * discount) / 100;
+    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+  }
+
+  // incress the quentity
+  function addPizza() {
+    qty++;
+    document.getElementById("quantityValue").textContent = qty;
+    updateTotalPrice();
+  }
+
+    // less the quentity
+
+  function removePizza() {
+    if (qty > 0) {
+      qty--;
+      document.getElementById("quantityValue").textContent = qty;
+      updateTotalPrice();
+    }
+  }
+
+  function applyAddons() {
+    addonsApplied = document.getElementById("addonsCheckbox").checked;
+    updateTotalPrice();
+  }
+
+  function applyDiscount() {
+    discount = parseInt(document.getElementById("discount").value);
+    updateTotalPrice();
+  }
+</script>
+</body>
+</html>
